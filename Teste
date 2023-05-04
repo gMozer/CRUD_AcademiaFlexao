@@ -51,7 +51,7 @@ def cadastro():
         escritor = csv.writer(arquivo)
         escritor.writerow([nome, cpf, telefone])
         print("Cliente cadastrado com sucesso!")
-        return voltar_menu() 
+        return menu() 
 
 def relatorio():
     cpff = input("Digite o CPF do cliente que deseja visualizar: ")
