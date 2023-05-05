@@ -17,13 +17,17 @@ def menu():
 def cadastro():
     print('-'*60)
     
-    while True:
-       nome=input("Digite seu nome (ou digite 'sair' para encerrar):")
-       break
-       if nome == "sair":
-            break               
 
-    while True:                                    
+    while True:
+     nome = input("Digite seu nome (ou digite 'sair' para encerrar): ")
+     if nome.lower() == "sair":
+         return
+     else:
+         print("Olá, " + nome + "!")
+         break       
+
+    #while not cpf.isdigit() or len(cpf) != 11:
+    while True:                                              #!= diferente #isdigit() serve para verificar se é só número.
        cpf=input('Insira o cpf: ')
        if cpf.isdigit() and len(cpf) == 11:
             break
@@ -44,15 +48,16 @@ def cadastro():
         print("CPF(s) duplicado(s): ", duplicated_cpfs)
     else:
         print("Não há CPFs duplicados no arquivo.")
-        
-    while True:                                    
+
+    #while not cpf.isdigit() or len(telefone) != 11:
+    while True:                                              #!= diferente #isdigit() serve para verificar se é só número.
        telefone=input('Insira o Telefone: ')
        if telefone.isdigit() and len(telefone) == 11:
             break
        else:
             print('Insira o Telefone com o DDD')
 
-    with open("database.csv", "a") as arquivo:         
+    with open("database.csv", "a") as arquivo:          #a = attach      #colocar código de conflito de cpf
         escritor = csv.writer(arquivo)
         escritor.writerow([nome, cpf, telefone])
         print("Cliente cadastrado com sucesso!")
@@ -72,7 +77,7 @@ def relatorio():
                 print(f"Cliente encontrado: {linha}")
     voltar_menu()
 
-def atualizar():                                                  
+def atualizar():                                                  #colocar código de ser possível apenas procurar pelo CPF
     cpf = input("Digite o CPF do cliente que deseja atualizar: ")
     with open("database.csv", "r") as arquivo:
         leitor = csv.reader(arquivo)
