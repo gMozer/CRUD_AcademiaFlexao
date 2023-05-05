@@ -24,16 +24,14 @@ def cadastro():
          return
      else:
          print("Olá, " + nome + "!")
-         break       
+         break   
 
-    #while not cpf.isdigit() or len(cpf) != 11:
-    while True:                                              #!= diferente #isdigit() serve para verificar se é só número.
+    while True:                                      
        cpf=input('Insira o cpf: ')
        if cpf.isdigit() and len(cpf) == 11:
             break
        else:
             print('Insira o cpf com o 11 Digitos')
-
     with open('database.csv') as arquivo:
       csv_reader = csv.reader(arquivo, delimiter=',')
       next(csv_reader) # ignore the header row
@@ -42,8 +40,8 @@ def cadastro():
         if cpf in cpf_set:
             duplicated_cpfs.add(cpf)
         else:
-            cpf_set.add(cpf)
-    
+            cpf_set.add(cpf)   
+
     if duplicated_cpfs:
         print("CPF(s) duplicado(s): ", duplicated_cpfs)
     else:
