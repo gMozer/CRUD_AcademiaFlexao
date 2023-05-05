@@ -1,0 +1,19 @@
+import csv
+
+cpf_set = set()
+duplicated_cpfs = set()
+
+with open('seu_arquivo.csv') as csv_file:
+    csv_reader = csv.reader(csv_file, delimiter=',')
+    next(csv_reader) # ignore the header row
+    for row in csv_reader:
+        cpf = row[0] # assuming the CPF is in the first column
+        if cpf in cpf_set:
+            duplicated_cpfs.add(cpf)
+        else:
+            cpf_set.add(cpf)
+
+if duplicated_cpfs:
+    print("CPF(s) duplicado(s): ", duplicated_cpfs)
+else:
+    print("Não há CPFs duplicados no arquivo.")
