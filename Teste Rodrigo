@@ -1,5 +1,7 @@
 import os
 import csv
+cpf_set = set()
+duplicated_cpfs = set()
 
 def menu():
     print('-'*60)
@@ -12,47 +14,52 @@ def menu():
     print('Pressione 5 para Sair.')
     print('-'*60)
 
-
 def cadastro():
     print('-'*60)
-    usuarios = []  # lista para armazenar os dados dos usuários
-    cpfs_cadastrados = set()  # conjunto para armazenar os CPFs já cadastrados
-
+    
     while True:
-        nome = input("Digite seu nome (ou digite 'sair' para encerrar): ")
-        if nome.lower() == "sair":
-            return menu()
-        else:
-            break
+       nome=input("Digite seu nome (ou digite 'sair' para encerrar):")
+       break
+       if nome == "sair":
+            break               
 
-    while True:  #!= diferente #isdigit() serve para verificar se é só número.
-        cpf=input('Insira o cpf: ')
-        if cpf.isdigit() and len(cpf) == 11:
-            if cpf in cpfs_cadastrados:  # verifica se o CPF já está cadastrado
-                print("CPF já cadastrado. Tente novamente.")
-            else:
-                break
-        else:
+    #while not cpf.isdigit() or len(cpf) != 11:
+    while True:                                              #!= diferente #isdigit() serve para verificar se é só número.
+       cpf=input('Insira o cpf: ')
+       if cpf.isdigit() and len(cpf) == 11:
+            break
+       else:
             print('Insira o cpf com o 11 Digitos')
 
-    while True:  #!= diferente #isdigit() serve para verificar se é só número.
-        telefone=input('Insira o telefone: ')
-        if telefone.isdigit() and len(telefone) == 11:
-            break  
+    with open('database.csv') as arquivo:
+      csv_reader = csv.reader(arquivo, delimiter=',')
+      next(csv_reader) # ignore the header row
+      for row in csv_reader:
+      rod  cpf = row[0] # assuming the CPF is in the first column
+        if cpf in cpf_set:
+            duplicated_cpfs.add(cpf)
         else:
-            print('Insira o telefone com o 11 Digitos')
-    # se o CPF não estiver cadastrado e possuir 11 dígitos, adiciona o usuário à lista e ao conjunto
-    usuarios.append({"nome": nome, "cpf": cpf, 'telefone': telefone})
-    cpfs_cadastrados.add(cpf)
+            cpf_set.add(cpf)
+    
+    if duplicated_cpfs:
+        print("CPF(s) duplicado(s): ", duplicated_cpfs)
+    else:
+        print("Não há CPFs duplicados no arquivo.")
 
-    print("Usuários cadastrados:")
-    for usuario in usuarios:
-        print(f"Nome: {usuario['nome']}, CPF: {usuario['cpf']}, Telefone: {usuario['telefone']}")
+    #while not cpf.isdigit() or len(telefone) != 11:
+    while True:                                              #!= diferente #isdigit() serve para verificar se é só número.
+       telefone=input('Insira o Telefone: ')
+       if telefone.isdigit() and len(telefone) == 11:
+            break
+       else:
+            print('Insira o Telefone com o DDD')
+
     with open("database.csv", "a") as arquivo:          #a = attach      #colocar código de conflito de cpf
         escritor = csv.writer(arquivo)
         escritor.writerow([nome, cpf, telefone])
         print("Cliente cadastrado com sucesso!")
-        return menu() 
+        return
+    voltar_menu()
 
 def relatorio():
     cpff = input("Digite o CPF do cliente que deseja visualizar: ")
@@ -114,6 +121,9 @@ def excluir():
             print("Cliente não encontrado.")
 
     voltar_menu()
+
+def voltar_menu():
+    return input('Pressione ENTER para retornar ao menu principal.')
 
 limpar = lambda: os.system('cls')   #limpar o console
 
