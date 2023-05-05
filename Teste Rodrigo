@@ -23,8 +23,7 @@ def cadastro():
        if nome == "sair":
             break               
 
-    #while not cpf.isdigit() or len(cpf) != 11:
-    while True:                                              #!= diferente #isdigit() serve para verificar se é só número.
+    while True:                                    
        cpf=input('Insira o cpf: ')
        if cpf.isdigit() and len(cpf) == 11:
             break
@@ -45,16 +44,15 @@ def cadastro():
         print("CPF(s) duplicado(s): ", duplicated_cpfs)
     else:
         print("Não há CPFs duplicados no arquivo.")
-
-    #while not cpf.isdigit() or len(telefone) != 11:
-    while True:                                              #!= diferente #isdigit() serve para verificar se é só número.
+        
+    while True:                                    
        telefone=input('Insira o Telefone: ')
        if telefone.isdigit() and len(telefone) == 11:
             break
        else:
             print('Insira o Telefone com o DDD')
 
-    with open("database.csv", "a") as arquivo:          #a = attach      #colocar código de conflito de cpf
+    with open("database.csv", "a") as arquivo:         
         escritor = csv.writer(arquivo)
         escritor.writerow([nome, cpf, telefone])
         print("Cliente cadastrado com sucesso!")
@@ -74,7 +72,7 @@ def relatorio():
                 print(f"Cliente encontrado: {linha}")
     voltar_menu()
 
-def atualizar():                                                  #colocar código de ser possível apenas procurar pelo CPF
+def atualizar():                                                  
     cpf = input("Digite o CPF do cliente que deseja atualizar: ")
     with open("database.csv", "r") as arquivo:
         leitor = csv.reader(arquivo)
