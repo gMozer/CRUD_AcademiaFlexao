@@ -35,7 +35,7 @@ def cadastro():
       csv_reader = csv.reader(arquivo, delimiter=',')
       next(csv_reader) # ignore the header row
       for row in csv_reader:
-      rod  cpf = row[0] # assuming the CPF is in the first column
+        cpf = row[0] # assuming the CPF is in the first column
         if cpf in cpf_set:
             duplicated_cpfs.add(cpf)
         else:
