@@ -1,7 +1,5 @@
 import os
 import csv
-cpf_set = set()
-duplicated_cpfs = set()
 
 def menu():
     print('-'*60)
@@ -17,7 +15,6 @@ def menu():
 def cadastro():
     print('-'*60)
     
-
     while True:
      nome = input("Digite seu nome (ou digite 'sair' para encerrar): ")
      if nome.lower() == "sair":
@@ -25,25 +22,32 @@ def cadastro():
      else:
          print("Olá, " + nome + "!")
          break   
-         
-    while True:                                              #!= diferente #isdigit() serve para verificar se é só número.
+
+    while True:                                      
        cpf=input('Insira o cpf: ')
        if cpf.isdigit() and len(cpf) == 11:
             break
        else:
             print('Insira o cpf com o 11 Digitos')
-    with open('database.csv') as arquivo:
-      csv_reader = csv.reader(arquivo, delimiter=',')
-      next(csv_reader) # ignore the header row
-      for row in csv_reader:
-        cpf = row[0] # assuming the CPF is in the first column
-        if cpf in cpf_set:
-            duplicated_cpfs.add(cpf)
-        else:
-            cpf_set.add(cpf)   
 
+    # Verificando duplicidade de CPFs no arquivo
+    cpf_set = set()
+    duplicated_cpfs = set()
+
+    with open("database.csv", "a") as arquivo:
+      csv_reader = csv.reader(arquivo, delimiter=',')
+      next(csv_reader) # Ignorando a linha de cabeçalho
+      for row in csv_reader:
+            cpf = row[0] # Supondo que o CPF esteja na primeira coluna
+            if cpf in cpf_set:
+                duplicated_cpfs.add(cpf)
+            else:
+                cpf_set.add(cpf)
+
+    # Verificando se há CPFs duplicados
     if duplicated_cpfs:
         print("CPF(s) duplicado(s): ", duplicated_cpfs)
+        return cadastro() # Chamando a função novamente para solicitar um novo CPF
     else:
         print("Não há CPFs duplicados no arquivo.")
 
