@@ -14,11 +14,14 @@ def menu():
 
 def cadastro():
     print('-'*60)
-    nome=input('digite nome ')                                                       #colocar código para checar se esse CPF já existe
-    cpf=input('Insira o cpf (apenas os números): ')                                  #Cpf PRECISA ter 11 numeros
-    while not cpf.isdigit() or len(cpf) != 11:                                              #!= diferente #isdigit() serve para verificar se é só número.
-        print('insira apenas os números e 11 dígitos do cpf')
-        return cadastro()
+    nome=input('digite nome ')
+    cpf=input('Insira o cpf: ')                                                       #colocar código para checar se esse CPF já existe                                #Cpf PRECISA ter 11 numeros
+    while True:  
+      cpf=input('Confirme o cpf: ')   
+      if cpf.isdigit() and len(cpf) == 11:
+          break
+      else:
+        print('insira apenas 11 números: ')
     telefone=input('telefone ')
     with open("database.csv", "a") as arquivo:          #a = attach      #colocar código de conflito de cpf
         escritor = csv.writer(arquivo)
