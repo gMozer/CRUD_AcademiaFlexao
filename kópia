@@ -1,0 +1,46 @@
+import csv
+import funcoes
+import incluir
+import alterar
+import exclusao
+
+
+def exibir_registros():
+    try:
+        with open('clientes.csv', 'r') as arquivo:
+            leitor_csv = csv.reader(arquivo)
+            for linha in leitor_csv:
+                print(linha)
+    except FileNotFoundError:
+        print("Arquivo não encontrado.")
+    except Exception as e:
+        print(f"Ocorreu um erro: {e}")
+
+# Criando menu interativo:
+while True:
+    print('-' * 20)
+    print('MENU DE REGISTROS')
+    print('-' * 20)
+    print()
+    print('1 - Adicionar Registro')
+    print('2 - Atualizar Registro')
+    print('3 - Excluir Registro')
+    print('0 - Sair')
+    print('-' * 20)
+
+    opcao = input('Escolha uma opção: ')
+
+    if opcao == '1':
+        print('\n=== Adicionar Registro ===')
+        incluir.adicionar_registro()
+    elif opcao == '2':
+        print('\n=== Atualizar Registro ===')
+        alterar.atualizar()
+    elif opcao == '3':
+        print('\n=== Excluir Registro ===')
+        exclusao.excluir_registro()
+    elif opcao == '0':
+        ('\n=== Fim do Programa ===')
+        break
+    else:
+        print('\nOpção Inválida! Escolha uma opção válida.')
