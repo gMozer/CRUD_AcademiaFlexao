@@ -1,7 +1,6 @@
 import os
 import csv
-cpf_set = set()
-duplicated_cpfs = set()
+
 
 def menu():
     print('-'*60)
@@ -17,7 +16,6 @@ def menu():
 def cadastro():
     print('-'*60)
     
-
     while True:
      nome = input("Digite seu nome (ou digite 'sair' para encerrar): ")
      if nome.lower() == "sair":
@@ -32,22 +30,14 @@ def cadastro():
             break
        else:
             print('Insira o cpf com o 11 Digitos')
-    with open('database.csv') as arquivo:
-      csv_reader = csv.reader(arquivo, delimiter=',')
-      next(csv_reader) # ignore the header row
-      for row in csv_reader:
-        cpf = row[0] # assuming the CPF is in the first column
-        if cpf in cpf_set:
-            duplicated_cpfs.add(cpf)
+    with open('database.csv','r') as arquivo:
+        leitor=csv.reader(arquivo)
+        for linha in leitor:
+            if cpf in linha:
+              return
         else:
-            cpf_set.add(cpf)   
-
-    if duplicated_cpfs:
-        print("CPF(s) duplicado(s): ", duplicated_cpfs)
-    else:
-        print("Não há CPFs duplicados no arquivo.")
-
-    #while not cpf.isdigit() or len(telefone) != 11:
+          print('continue')
+     
     while True:                                              #!= diferente #isdigit() serve para verificar se é só número.
        telefone=input('Insira o Telefone: ')
        if telefone.isdigit() and len(telefone) == 11:
