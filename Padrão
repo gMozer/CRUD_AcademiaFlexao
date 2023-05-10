@@ -42,6 +42,7 @@ def cadastro():
             duplicated_cpfs.add(cpf)
         else:
             cpf_set.add(cpf)
+            break
 
     # Verificando se há CPFs duplicados
     if duplicated_cpfs:
