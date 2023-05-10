@@ -1,6 +1,7 @@
 import os
 import csv
 
+
 def menu():
     print('-'*60)
     print('Bem-vindo ao gerenciamento da Academia Flexão!')
@@ -29,28 +30,16 @@ def cadastro():
             break
        else:
             print('Insira o cpf com o 11 Digitos')
-
-    # Verificando duplicidade de CPFs no arquivo
-    cpf_set = set()
-    duplicated_cpfs = set()
-
-    with open('database.csv') as arquivo:
-      csv_reader = csv.reader(arquivo, delimiter=',')
-      for row in csv_reader:
-        cpf = row[1]
-        if cpf in cpf_set:
-            duplicated_cpfs.add(cpf)
+    with open('database.csv', 'r') as arquivo:
+        leitor=csv.reader(arquivo)
+        for linha in leitor:
+            while cpf in linha:
+              input('Cpf ja cadastrado, porfavor insira outro: ')
+              if cpf is not(linha):
+                break
         else:
-            cpf_set.add(cpf)
-            break
-
-    # Verificando se há CPFs duplicados
-    if duplicated_cpfs:
-        print("CPF(s) duplicado(s): ", duplicated_cpfs)
-        return cadastro() # Chamando a função novamente para solicitar um novo CPF
-    else:
-        print("Não há CPFs duplicados no arquivo.")
-
+          print('continue')
+     
     while True:                                              #!= diferente #isdigit() serve para verificar se é só número.
        telefone=input('Insira o Telefone: ')
        if telefone.isdigit() and len(telefone) == 11:
@@ -103,64 +92,6 @@ def atualizar():                                                  #colocar códi
     voltar_menu()
 
 
-def excluir():
-    cpf = input("Digite o CPF do cliente que deseja excluir: ")
-    with open("database.csv", "r") as arquivo:
-        leitor = csv.reader(arquivo)
-        linhas = list(leitor)
-        encontrado = False
-        for i, linha in enumerate(linhas):
-            if cpf in linha:
-                encontrado = True
-                print(f"Cliente encontrado: {linha}")
-                confirmacao = input("Tem certeza que deseja excluir esse cliente? (S/N) ")
-                if confirmacao.lower() == "s":
-                    del linhas[i]
-                    with open("database.csv", "w", newline="") as arquivo:
-                        escritor = csv.writer(arquivo)
-                        escritor.writerows(linhas)
-                    print("Cliente excluído com sucesso!")
-                
-        if not encontrado:
-            print("Cliente não encontrado.")
-
-    voltar_menu()
-
-def voltar_menu():
-    return input('Pressione ENTER para retornar ao menu principal.')
-
-limpar = lambda: os.system('cls')   #limpar o console
-
-selecao=0
-while not selecao==5: 
-   menu()
-   selecao == 0
-   selecao = int(input('Insira a opção:'))
-    
-   if selecao == 1:
-      limpar()
-      cadastro()
-
-   elif selecao==2:
-      limpar()
-      relatorio()
-
-   elif selecao==3:
-      limpar()
-      atualizar()
-
-   elif selecao==4:
-      limpar()
-      excluir()
-
-   elif selecao==5:  #precisa definir para não mostrar a tela do else
-      exit()         #função do próprio python que fecha o console
-
-   else:
-      limpar()
-      print('Insira uma das opções listadas.')
-      voltar_menu()
-   limpar()
 def excluir():
     cpf = input("Digite o CPF do cliente que deseja excluir: ")
     with open("database.csv", "r") as arquivo:
