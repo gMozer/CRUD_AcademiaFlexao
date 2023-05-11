@@ -85,34 +85,42 @@ def cadastro():
 ##############################################################################################################
 
 def relatorio():
-#    print('Você deseja visualizar um cliente específico ou visualizar toda a lista?')
-#    escolha = input('Digite "um" ou "toda": ')
-#    if escolha.lower == 'toda':
+    opcao = 0
+    print('Você deseja visualizar um cliente específico ou todos cadastrados no banco de dados? (digite "sair" para voltar ao menu)')
+    opcao = input('"um" ou "todos": ')
+
+    if opcao.lower() == 'um':
+       # Loop para verificar se o CPF possui 11 caracteres numéricos.
+       while True:
+            chave = input("Digite o CPF do cliente que deseja visualizar: ")
+            if chave.isdigit() and len(chave) == 11:
+                break
+            else:
+              print('Insira o cpf com apenas 11 caracteres numéricas')
+
+       with open("database.csv", "r") as arquivo:         
+            leitor = csv.reader(arquivo)
+            for row in leitor:
+               if chave == row[1]:
+                  print('Cliente encontrado: ', row)
+               else:
+                   print('Cliente não encontrado.')
+
+    elif opcao.lower() == 'todos':
         with open('database.csv', 'r') as arquivo:
             leitor = csv.reader(arquivo)
-            lista = list.csv(leitor)
-            next(lista)
-            for i, linha in enumerate(lista):
-                print(f'Os clientes encontrados foram:\n{i}: {lista}')
-                voltar_menu()
-        # to mexendo aq ainda
- 
- 
- 
- 
- 
- 
-#    cpff = input("Digite o CPF do cliente que deseja visualizar: ")
-#    with open("database.csv", "r") as arquivo:         
-#        leitor = csv.reader(arquivo)
-#        linhas = list(leitor)
-#        if cpff in linhas:
-#            print('Cliente encontrado: ', linhas)
-#        for i, linha in enumerate(linhas):
-#            if cpff in linha:
-#                encontrado = True
-#                print(f"Cliente encontrado: {linha}")
-#    voltar_menu()
+            # Enumerate serve para adicionar um ID para a lista.
+            for indice, linha in enumerate(leitor):
+                # f = Formata tudo como string.
+                print(f'{indice}: {linha}')
+
+    elif opcao.lower() == 'sair':
+        return
+
+    else:
+        print('Insira uma opção válida.')
+        return relatorio()
+    voltar_menu()
 
 ##############################################################################################################
 
