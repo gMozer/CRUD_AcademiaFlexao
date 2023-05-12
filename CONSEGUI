@@ -65,11 +65,8 @@ def cadastro():
         if telefone.isdigit() and len(telefone) == 11:
             break  
         else:
-            print('Insira o telefone com o 11 Digitos')rodr
+            print('Insira o telefone com o 11 Digitos')
 
-    print("Usuários cadastrados:")
-    for usuario in usuarios:
-        print(f"Nome: {usuario['nome']}, CPF: {usuario['cpf']}, Telefone: {usuario['telefone']}")
     with open("database.csv", "a") as arquivo:          #a = attach      #colocar código de conflito de cpf
         escritor = csv.writer(arquivo)
         escritor.writerow([nome, cpf, telefone])
