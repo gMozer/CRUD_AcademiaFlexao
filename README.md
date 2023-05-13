@@ -1,2 +1,2 @@
 # CRUD_AcademiaFlexao
-Academic work, creating a CRUD for going to gym in Python
+Academic work, creating a CRUD for administration of a gym in Python
