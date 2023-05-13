@@ -98,13 +98,20 @@ def relatorio():
             else:
               print('Insira o cpf com apenas 11 caracteres numéricas')
 
+       # Variável que define se o cliente existe ou não no banco de dados.
+       encontrado = False
        with open("database.csv", "r") as arquivo:         
             leitor = csv.reader(arquivo)
-            for row in leitor:
-               if chave == row[1]:
-                  print('Cliente encontrado: ', row)
-               else:
-                   print('Cliente não encontrado.')
+            for linha in leitor:
+               if chave in linha:
+                    # Se pela chave achar no banco de dados a variável "encontrado" vira verdadeira, após isso é imprimido a linha que a chave está e para o loop. 
+                    encontrado = True               
+                    print('Cliente encontrado: ', linha)
+                    break
+       # Se a chave não for encontrada no banco de dados a variável continua negativa, assim retornando ao módulo de relatório.
+       if not encontrado:
+            print('Cliente não encontrado.')
+            return relatorio()
 
     elif opcao.lower() == 'todos':
         with open('database.csv', 'r') as arquivo:
