@@ -1,5 +1,5 @@
 import csv
-from funcoes import voltar_menu, limpar
+from funcoes import voltar_menu
 
 def menu():
     print('-'*60)
@@ -14,7 +14,7 @@ def menu():
 
 def cadastro():
     print('-'*60)
-    cabecalho=['Nome', 'CPF', 'Telefone', 'Plano']
+    cabecalho=['NOME', 'CPF', 'TELEFONE', 'PLANO']
     # Cria um arquivo csv e acrescenta um cabeçalho. Caso o arquivo já exista é verificado se possui um cabeçalho.
     with open ('database.csv', 'a', newline='') as arquivoC:
         if arquivoC.tell() == 0:
@@ -22,17 +22,21 @@ def cadastro():
               escritor.writerow(cabecalho)
               arquivoC.close()
 
+    # PARA FAZER: o input ta aceitando múltiplos espaços como entrada
     # Loop que continua até o usuário digitar o nome ou escolher vpltar ao menu principal. 
     while True:
        nome = input("Digite o nome do cliente (ou digite 'sair' para voltar ao menu principal): ")
        # Lower serve para formatar qualquer entrada de dados como minúscula
        if nome.lower() == "sair":
            return
-       # Caso o usuário pressione Enter sem querer ele pode tentar novamente.
+       # Caso o usuário pressione Enter sem querer ele pode tentar novamente (mesmo com o uso do else é necessário in)
        elif nome == '':
            print('Insira o nome do cliente corretamente.')
+       # Função que faz com que a variável "nome" só possa ter letras e espaços. 
+       elif all(caractere.isalpha() or caractere.isspace() for caractere in nome):
+           break
        else:
-           break   
+           print('Insira o nome corretamente.')   
 
     # Loop que continua até o CPF inserido possuir 11 caracteres numéricas.
     while True:                                      
@@ -65,116 +69,210 @@ def cadastro():
 
     # Loop que continua até o plano inserido possuir 1 caractere numérico.
     print('Qual plano o cliente escolheu?')
-    print('1 - Básico')
-    print('2 - Intermediário')
-    print('3 - XANDÃO')
+    print('1 - Amendobobo')
+    print('2 - XANDÃO')
+    print('3 - PLUTÃO EXPANDIDO')
     while True:
         plano= input('O plano escolhido foi: ')
-        if plano.isdigit() and len(plano) == 1:
+        # Lista que só permite a saída do loop caso o número selecionado faça parte da mesma.
+        if plano in ['1','2','3']:
             break
         else:
-            print('Insira corretamente o plano.')
+            print('Insira um plano válido!')
 
     # Acrescenta as informações do cliente ao banco de dados.
     with open("database.csv", "a", newline='') as arquivo:
-        escritor = csv.writer(arquivo)          
-        escritor.writerow([nome, cpf, telefone, plano])
+        escritor = csv.writer(arquivo)     
+        # Como os banco de dados utilizam os dados em maiúsculo decidi convertar o "nome" para capslock.     
+        escritor.writerow([nome.upper(), cpf, telefone, plano])
         print("Cliente cadastrado com sucesso!")
+
     voltar_menu()
 
 ##############################################################################################################
 
 def relatorio():
-    opcao = 0
-    print('Você deseja visualizar um cliente específico ou todos cadastrados no banco de dados? (digite "sair" para voltar ao menu)')
-    opcao = input('"um" ou "todos": ')
+    try:
+        opcao = 0
+        print('Você deseja visualizar um cliente específico ou todos cadastrados no banco de dados? (digite "sair" para voltar ao menu)')
+        opcao = input('"um" ou "todos": ')
 
-    if opcao.lower() == 'um':
-       # Loop para verificar se o CPF possui 11 caracteres numéricos.
-       while True:
-            chave = input("Digite o CPF do cliente que deseja visualizar: ")
-            if chave.isdigit() and len(chave) == 11:
-                break
-            else:
-              print('Insira o cpf com apenas 11 caracteres numéricas')
-
-       # Variável que define se o cliente existe ou não no banco de dados.
-       encontrado = False
-       with open("database.csv", "r") as arquivo:         
-            leitor = csv.reader(arquivo)
-            for linha in leitor:
-               if chave in linha:
-                    # Se pela chave achar no banco de dados a variável "encontrado" vira verdadeira, após isso é imprimido a linha que a chave está e para o loop. 
-                    encontrado = True               
-                    print('Cliente encontrado: ', linha)
+        if opcao.lower() == 'um':
+           # Loop para verificar se o CPF possui 11 caracteres numéricos.
+           while True:
+                chave = input("Digite o CPF do cliente que deseja visualizar: ")
+                if chave.isdigit() and len(chave) == 11:
                     break
-       # Se a chave não for encontrada no banco de dados a variável continua negativa, assim retornando ao módulo de relatório.
-       if not encontrado:
-            print('Cliente não encontrado.')
+                else:
+                  print('Insira o cpf com apenas 11 caracteres numéricas')
+
+           # Variável que define se o cliente existe ou não no banco de dados.
+           encontrado = False
+           with open("database.csv", "r") as arquivo:         
+                leitor = csv.reader(arquivo)
+                for linha in leitor:
+                   if chave in linha:
+                        # Se pela chave achar no banco de dados a variável "encontrado" vira verdadeira, após isso é imprimido a linha que a chave está e para o loop. 
+                        encontrado = True               
+                        print('Cliente encontrado: ', linha)
+                        break
+           # Se a chave não for encontrada no banco de dados a variável continua negativa, assim retornando ao módulo de relatório.
+           if not encontrado:
+                print('Cliente não encontrado.')
+                return relatorio()
+
+
+        elif opcao.lower() == 'todos':
+            with open('database.csv', 'r') as arquivo:
+                leitor = csv.reader(arquivo)
+                # Enumerate serve para adicionar IDs para a lista.
+                for indice, linha in enumerate(leitor):
+                    # f = Formata tudo como string.
+                    print(f'{indice}: {linha}')
+
+        elif opcao.lower() == 'sair':
+            return
+
+        else:
+            print('Insira uma opção válida.')
             return relatorio()
 
-    elif opcao.lower() == 'todos':
-        with open('database.csv', 'r') as arquivo:
-            leitor = csv.reader(arquivo)
-            # Enumerate serve para adicionar um ID para a lista.
-            for indice, linha in enumerate(leitor):
-                # f = Formata tudo como string.
-                print(f'{indice}: {linha}')
-
-    elif opcao.lower() == 'sair':
-        return
-
-    else:
-        print('Insira uma opção válida.')
-        return relatorio()
-    voltar_menu()
-
+        voltar_menu()
+    
+    # Caso o arquivo CSV não existe esta mensagem é imprimida.
+    except FileNotFoundError:
+        print('Cadastre um cliente primeiro!')
+        voltar_menu()
+ 
 ##############################################################################################################
 
-def atualizar():                                         
-    cpf = input("Digite o CPF do cliente que deseja atualizar: ")
-    with open("database.csv", "r") as arquivo:
-        leitor = csv.reader(arquivo)
-        linhas = list(leitor)
-        encontrado = False
-        for i, linha in enumerate(linhas):
-            if cpf in linha:
-                encontrado = True
-                print(f"Cliente encontrado: {linha}")
-                print("Digite as novas informações:")
-                nome = input("Digite o novo nome do cliente: ")
-                cpf = input('Digite o novo CPF do cliente: ')
-                telefone = input("Digite a novo telefone do cliente: ")
-                linhas[i] = [nome, cpf, telefone]
-                with open("database.csv", "w", newline="") as arquivo:         #w= write
-                    escritor = csv.writer(arquivo)
-                    escritor.writerows(linhas)
-                print("Cliente atualizado com sucesso!")
-                
-        if not encontrado:
-            print("Cliente não encontrado.")
-    voltar_menu()
+def atualizar():
+    try:                                         
+        chave = input('Digite o CPF do cliente que deseja atualizar (ou digite sair para voltar ao menu): ')
 
+        if chave.isdigit() and len(chave) == 11:
+            with open('database.csv', 'r') as arquivo:
+                leitor = csv.reader(arquivo)
+                encontrado = False
+                # Define a variável como uma lista
+                dados = []
+                for linha in leitor:
+                    if chave in linha[1]:
+                        encontrado = True
+                        print(f'Cliente encontrado: {linha}')
+                        print('Digite as novas informações:')
+                        # Loops iguais ao do cadastro que verificam se as informações digitadas estão corretas.
+                        while True:
+                            novo_nome = input('Digite o novo nome do cliente: ')
+                            if all(caractere.isalpha() or caractere.isspace() for caractere in novo_nome):
+                                break
+                            elif novo_nome == '':
+                                print('Digite o nome corretamente!')
+                            else:
+                                print('Digite o nome corretamente!')
+
+                        while True:                            
+                            novo_telefone = input('Digite a novo telefone do cliente: ')
+                            if novo_telefone.isdigit() and len(novo_telefone) == 11:
+                                break
+                            else:
+                               print('Insira o Telefone com o DDD')
+                        
+                        while True:
+                            novo_plano = input('Digite o novo plano do cliente\n(1 - Amendobobo\n2 - XANDÃO\n3 - PLUTÃO EXPANDIDO)\n: ')
+                            if novo_plano in ['1','2','3']:
+                                break
+                            else:
+                                print('Insira uma opção válida!')
+
+                        # Grava cada informação no seu array respectivo
+                        linha[0] = novo_nome.upper()
+                        linha[2] = novo_telefone
+                        linha[3] = novo_plano
+                    # Coloca as informações gravadas em outra variável
+                    dados.append(linha)
+
+            # Modifica as informações no arquivo CSV                        
+            if encontrado:
+                with open('database.csv', 'w', newline='') as arquivo:
+                            escritor = csv.writer(arquivo)
+                            escritor.writerows(dados)
+                            print('Cliente atualizado com sucesso!')
+                            voltar_menu()
+                        
+            if not encontrado:
+                print('Cliente não encontrado.')
+                return atualizar()
+
+        elif chave == 'sair':
+            return
+
+        else:
+            print('Digite uma das opções válidas!')
+            return atualizar()
+
+    # Caso o arquivo CSV não existe esta mensagem é imprimida. 
+    except FileNotFoundError:
+        print('Cadastre um cliente primeiro!')
 
 ##############################################################################################################
 
 def excluir():
-    cpf = input("Digite o CPF do cliente que deseja excluir: ")
-    with open("database.csv", "r") as arquivo:
-        leitor = csv.reader(arquivo)
-        linhas = list(leitor)
-        encontrado = False
-        for i, linha in enumerate(linhas):
-            if cpf in linha:
-                encontrado = True
-                print(f"Cliente encontrado: {linha}")
-                confirmacao = input("Tem certeza que deseja excluir esse cliente? (S/N) ")
-                if confirmacao.lower() == "s":
-                    del linhas[i]
-                    with open("database.csv", "w", newline="") as arquivo:
-                        escritor = csv.writer(arquivo)
-                        escritor.writerows(linhas)
-                    print("Cliente excluído com sucesso!")
-                
-        if not encontrado:
-            print("Cliente não encontrado.")
+    try:
+        chave = input('Digite o CPF do cliente que deseja excluir (ou "sair" para retornar ao menu): ')
+
+        # Se o usuário digitar "sair" ele volta ao menu.
+        if chave.lower() == 'sair':
+            return
+
+        # Verificação se a chave digita possui as mesmas propriedades de um CPF.    
+        elif chave.isdigit() and len(chave) == 11:
+            with open("database.csv", "r") as arquivo:
+                leitor = csv.reader(arquivo)
+                # Armazena todo o conteúdo do arquivo CSV em uma variável.
+                linhas = list(leitor)
+                encontrado = False
+                # Cria-se um índice com todas as linhas do arquivo CSV.
+                for i, linha in enumerate(linhas):
+                    # Se a chave coincidir com o CPF na coluna 2 é imprimido o cliente na tela.
+                    if chave in linha[1]:
+                        encontrado = True
+                        while True:
+                           print(f"Cliente encontrado: {linha}")
+                           print('Tem certeza que deseja excluir esse cliente?')
+                           confirmacao = input('Digite "sim" ou "nao": ')
+                           if confirmacao.lower() == "sim":
+                               # Excluí-se a linha do cliente baseado pelo seu índice.
+                               del linhas[i]
+                               with open("database.csv", "w", newline="") as arquivo:
+                                   escritor = csv.writer(arquivo)
+                                   escritor.writerows(linhas)
+                               print('Cliente excluído com sucesso!')
+                               break
+                        
+                           elif confirmacao.lower() == "nao":
+                                print('O cliente não foi excluído.')
+                                break
+
+                           else:
+                               print('Digite "sim" ou "nao".')
+
+                # Se a chave não existe no banco de dados o usuário volta para o módulo excluir.        
+                if not encontrado:
+                    print('Cliente não encontrado.')
+                    return excluir()
+
+            # A função fica neste espaçamento para os IFs de confirmação.
+            voltar_menu()
+
+        else:
+            print('Digite corretamente!')
+            return excluir()
+
+    # Caso o arquivo CSV não existe esta mensagem é imprimida.        
+    except FileNotFoundError:
+        print('Cadastre um cliente primeiro!')
+        voltar_menu()
+
+# FIM DO PROGRAMA! =^..^=
+##############################################################################################################
