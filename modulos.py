@@ -22,21 +22,21 @@ def cadastro():
               escritor.writerow(cabecalho)
               arquivoC.close()
 
-    # PARA FAZER: o input ta aceitando múltiplos espaços como entrada
     # Loop que continua até o usuário digitar o nome ou escolher vpltar ao menu principal. 
     while True:
-       nome = input("Digite o nome do cliente (ou digite 'sair' para voltar ao menu principal): ")
+       # A função strip faz com que o nome não possa ser um monte de espaços.
+       nome = input("Digite o nome do cliente (ou digite 'sair' para voltar ao menu principal): ").strip()
        # Lower serve para formatar qualquer entrada de dados como minúscula
        if nome.lower() == "sair":
            return
-       # Caso o usuário pressione Enter sem querer ele pode tentar novamente (mesmo com o uso do else é necessário in)
+       # Caso o usuário pressione Enter sem querer ele pode tentar novamente.
        elif nome == '':
-           print('Insira o nome do cliente corretamente.')
+           print('Insira o nome do cliente corretamente!')
        # Função que faz com que a variável "nome" só possa ter letras e espaços. 
        elif all(caractere.isalpha() or caractere.isspace() for caractere in nome):
            break
        else:
-           print('Insira o nome corretamente.')   
+           print('Insira o nome do cliente corretamente!')   
 
     # Loop que continua até o CPF inserido possuir 11 caracteres numéricas.
     while True:                                      
@@ -44,7 +44,7 @@ def cadastro():
        if cpf.isdigit() and len(cpf) == 11:
             break
        else:
-            print('Insira o cpf com apenas 11 caracteres numéricas')
+            print('Insira o cpf com apenas 11 caracteres numéricas!')
 
     # Verifica se o CPF já existe no banco de dados. Caso já exista o usuário é mandado de volta para o módulo de cadastro.
     with open('database.csv', 'r') as arquivo:
@@ -65,7 +65,7 @@ def cadastro():
        if telefone.isdigit() and len(telefone) == 11:
             break
        else:
-            print('Insira o Telefone com o DDD')
+            print('Insira o Telefone com o DDD!')
 
     # Loop que continua até o plano inserido possuir 1 caractere numérico.
     print('Qual plano o cliente escolheu?')
@@ -104,7 +104,7 @@ def relatorio():
                 if chave.isdigit() and len(chave) == 11:
                     break
                 else:
-                  print('Insira o cpf com apenas 11 caracteres numéricas')
+                  print('Insira o cpf com apenas 11 caracteres numéricas!')
 
            # Variável que define se o cliente existe ou não no banco de dados.
            encontrado = False
@@ -163,7 +163,7 @@ def atualizar():
                         print('Digite as novas informações:')
                         # Loops iguais ao do cadastro que verificam se as informações digitadas estão corretas.
                         while True:
-                            novo_nome = input('Digite o novo nome do cliente: ')
+                            novo_nome = input('Digite o novo nome do cliente: ').strip()
                             if all(caractere.isalpha() or caractere.isspace() for caractere in novo_nome):
                                 break
                             elif novo_nome == '':
