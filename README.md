@@ -38,7 +38,7 @@ Clone the repository with git or download the code as a ZIP file.
     
 ## Authors
 
-- [@gMozer](https://www.github.com/gMozer) - Code and Translation.
+- [@gMozer](https://www.github.com/gMozer) - Code, Design and Translation.
 - [@zRodrigoFerreira](https://github.com/zRodrigoFerreira) - Code and Flowchart.
 - [@Belinaci](https://github.com/Belinaci) - Code and Flowchart.
 - [@GabrielaZul](https://github.com/GabrielaZul) - Flowchart.
