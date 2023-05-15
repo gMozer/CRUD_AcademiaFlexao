@@ -27,7 +27,7 @@ $ git clone https://github.com/gMozer/CRUD_AcademiaFlexao.git
 # English
 ## About the project
 
-Commented CRUD on a terminal/console, made with Python and CSV database. <br>Created for management of a ficcional gym (name and design based on the game "OMORI").
+Commented CRUD on terminal/console, made with Python and CSV database. <br>Created for management of a ficcional gym (name and design based on the game "OMORI").
 
 ## Installation
  
