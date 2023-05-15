@@ -7,7 +7,7 @@
 
 ## Sobre o projeto
 
-CRUD em terminal/console comentado feito em linguagem Python e com banco de dados CSV. <br>Criado para o gerenciamento de uma academia fictícia (nome e design baseado no jogo "OMORI").
+CRUD em terminal/console comentado, feito em linguagem Python e com banco de dados CSV. <br>Criado para o gerenciamento de uma academia fictícia (nome e design baseado no jogo "OMORI").
 
 ## Instalação
 
@@ -19,7 +19,7 @@ $ git clone https://github.com/gMozer/CRUD_AcademiaFlexao.git
     
 ## Autores
 
-- [@gMozer](https://www.github.com/gMozer) - Código, Design e Tradução.
+- [@gMozer](https://www.github.com/gMozer) - Código e Design.
 - [@zRodrigoFerreira](https://github.com/zRodrigoFerreira) - Código e Fluxograma.
 - [@Belinaci](https://github.com/Belinaci) - Código e Fluxograma.
 - [@GabrielaZul](https://github.com/GabrielaZul) - Fluxograma.
@@ -27,7 +27,7 @@ $ git clone https://github.com/gMozer/CRUD_AcademiaFlexao.git
 # English
 ## About the project
 
-CRUD on a terminal/console, made with Python and CSV database. <br>Created for management of a ficcional gym (name and design based on the game "OMORI").
+Commented CRUD on a terminal/console, made with Python and CSV database. <br>Created for management of a ficcional gym (name and design based on the game "OMORI").
 
 ## Installation
  
@@ -38,7 +38,7 @@ $ git clone https://github.com/gMozer/CRUD_AcademiaFlexao.git
     
 ## Authors
 
-- [@gMozer](https://www.github.com/gMozer) - Code, Design and Translation.
+- [@gMozer](https://www.github.com/gMozer) - Code and Design.
 - [@zRodrigoFerreira](https://github.com/zRodrigoFerreira) - Code and Flowchart.
 - [@Belinaci](https://github.com/Belinaci) - Code and Flowchart.
 - [@GabrielaZul](https://github.com/GabrielaZul) - Flowchart.
