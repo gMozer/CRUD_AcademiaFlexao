@@ -3,7 +3,7 @@
    <img src="https://i.imgur.com/jKN4XTa.gif">
 <p>
 
-# Português Brasileiro
+# ✦ PT-BR
 
 ## Sobre o projeto
 
@@ -24,7 +24,7 @@ $ git clone https://github.com/gMozer/CRUD_AcademiaFlexao.git
 - [@Belinaci](https://github.com/Belinaci) - Código e Fluxograma.
 - [@GabrielaZul](https://github.com/GabrielaZul) - Fluxograma.
 
-# English
+# ✦ ENG
 ## About the project
 
 Commented CRUD on terminal/console, made with Python and CSV database. <br>Created for management of a ficcional gym (name and design based on the game "OMORI").
