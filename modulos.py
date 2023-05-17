@@ -13,7 +13,6 @@ def menu():
     print('-'*60)
 
 def cadastro():
-    print('-'*60)
     cabecalho=['NOME', 'CPF', 'TELEFONE', 'PLANO']
     # Cria um arquivo csv e acrescenta um cabeçalho. Caso o arquivo já exista é verificado se possui um cabeçalho.
     with open ('database.csv', 'a', newline='') as arquivoC:
