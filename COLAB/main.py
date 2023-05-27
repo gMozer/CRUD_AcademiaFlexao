@@ -2,7 +2,7 @@
 
 from google.colab import output
 from modulos import menu, cadastro, relatorio, atualizar, excluir
-from funcoes import limpar, voltar_menu
+from funcoes import voltar_menu
 
 selecao = 0
 while not selecao==5: 
