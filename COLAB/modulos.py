@@ -34,7 +34,7 @@ def cadastro():
        elif nome == '':
            print('Insira o nome do cliente corretamente!')
        # Função que faz com que a variável "nome" só possa ter letras e espaços. 
-       elif all(caractere.isalpha() or caractere.isspace() for caractere in nome):
+       elif nome.isalpha() and len(nome) > 2:
            break
        else:
            print('Insira o nome do cliente corretamente!')   
@@ -165,7 +165,7 @@ def atualizar():
                         # Loops iguais ao do cadastro que verificam se as informações digitadas estão corretas.
                         while True:
                             novo_nome = input('Digite o novo nome do cliente: ').strip()
-                            if all(caractere.isalpha() or caractere.isspace() for caractere in novo_nome):
+                            if novo_nome.isalpha() and len(novo_nome) > 2:
                                 break
                             elif novo_nome == '':
                                 print('Digite o nome corretamente!')
